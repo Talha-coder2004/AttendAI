@@ -1,0 +1,79 @@
+# Python environments
+
+**/venv/
+**/.venv/
+**/**pycache**/
+*.py[cod]
+
+# CCTV footage and generated videos
+
+**/test_videos/
+**/test_results/
+**/temp_sessions/
+**/temporary_day_data/
+**/*.mp4
+**/*.avi
+**/*.mov
+**/*.mkv
+**/*.wmv
+**/*.webm
+
+# Java build output
+
+**/target/
+
+# React dependencies
+
+**/node_modules/
+**/dist/
+
+# AI model weights
+
+**/*.pt
+**/*.pth
+**/*.onnx
+**/*.engine
+
+# Secrets
+
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/application-secrets.properties
+
+# Personal attendance data
+
+attendance_log.csv
+names.csv
+
+# IDE settings and logs
+
+.idea/
+.vscode/
+*.log
+# Personal face-recognition images
+**/known_faces/
+**/C304_FRONT_people/
+
+# Generated face crops and tracking images
+**/crops/
+**/gallery_page*.jpg
+**/summary.csv
+**/summary.json
+
+# Generated attendance records
+**/attendance_log.csv
+**/names.csv
+
+# Camera recordings
+**/test_videos/
+**/test_results/
+**/temp_sessions/
+**/temporary_day_data/
+**/*.mp4
+**/*.avi
+**/*.mov
+**/*.mkv
+**/*.wmv
+**/*.webm

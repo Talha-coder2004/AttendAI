@@ -1,0 +1,53 @@
+# ============================================================
+# BoT-SORT config tuned for a STATIC camera + people walking fast
+# Drop-in replacement for  trackers/fast_botsort.yaml
+# ============================================================
+#
+# How ultralytics uses these numbers (important):
+#
+#   detections with score >= track_high_thresh   -> 1st association
+#   detections with score in [track_low_thresh,
+#                             track_high_thresh) -> 2nd "rescue"
+#                                                   association
+#   new tracks are only CREATED from detections
+#   with score >= new_track_thresh
+#
+# A fast-walking person is motion-blurred, so YOLO's confidence on
+# them drops for a few frames. The 2nd association is what keeps
+# their ID alive through those frames. It only works if the
+# detector actually passes those low-score boxes on, which is why
+# YOLO_CONFIDENCE in the main script is now 0.20 (it used to be 0.45,
+# which silently threw those boxes away before the tracker saw them).
+
+tracker_type: botsort
+
+track_high_thresh: 0.40
+track_low_thresh: 0.10
+new_track_thresh: 0.50
+
+# Frames a LOST track is remembered and can still be re-matched.
+track_buffer: 90
+
+# NOTE: match_thresh is a MAX (1 - IoU) cost.
+#   HIGHER = more forgiving (allows less box overlap between frames)
+#   LOWER  = stricter
+# Default is 0.8. A fast walker moves a lot between frames, so overlap
+# is small -> we need it a bit higher.
+match_thresh: 0.85
+
+# Blend detection score into the matching cost (helps blurred boxes)
+fuse_score: True
+
+# Camera is fixed, so global-motion compensation is pure wasted time
+# (sparseOptFlow costs several ms per frame). Turning it off gives the
+# tracker more FPS = smaller jumps between frames = better tracking.
+# If you ever mount the camera on something that moves, use: sparseOptFlow
+gmc_method: none
+
+# Tracker-internal ReID. OFF by default: it needs a recent ultralytics
+# and only uses the tiny detector's features. Identity continuity is
+# already handled by the face re-ID cache in the main script.
+with_reid: False
+model: auto
+proximity_thresh: 0.5
+appearance_thresh: 0.25
